@@ -32,21 +32,20 @@ public class FormTest {
         driver.manage().window().maximize();
 
         TimeUnit.SECONDS.sleep(5);
-        WebElement rodoButton = driver.findElement(By.id("ikeaTermsConsentModalClose"));
+        WebElement rodoButton = driver.findElement(By.id("onetrust-accept-btn-handler"));
         if (rodoButton.isDisplayed()) rodoButton.click();
-
-        WebElement clickLogin = driver.findElement(By.xpath("/html/body/header/div[3]/div/nav[2]/ul/li[1]/a"));
+        WebElement clickLogin = driver.findElement(By.className("hnf-header__profile-link"));
         clickLogin.click();
         TimeUnit.SECONDS.sleep(2);
 
         //Sprawdzenie czy znajdujemy się na stronie logowania
-        String txt = driver.findElement(By.xpath("/html/body/div/div/div[1]/div[2]/h1/span")).getText();
+        String txt = driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/h1/span")).getText();
         String expectedTxt = "Zaloguj";
         Assertions.assertEquals(expectedTxt, txt, "Login page failed. " +
                         "Expected: " + expectedTxt + " Actual: " + txt);
 
-
-        WebElement clickRegister = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[4]/a"));
+        
+        WebElement clickRegister = driver.findElement(By.id("signup"));
         clickRegister.click();
         TimeUnit.SECONDS.sleep(2);
 
