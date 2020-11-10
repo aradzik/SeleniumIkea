@@ -27,45 +27,52 @@ public class SelectProductTest {
         driver.manage().window().maximize();
 
         TimeUnit.SECONDS.sleep(2);
-        WebElement rodoButton = driver.findElement(By.id("ikeaTermsConsentModalClose"));
+        WebElement rodoButton = driver.findElement(By.id("onetrust-accept-btn-handler"));
         if (rodoButton.isDisplayed()) rodoButton.click();
 
-        WebElement products = driver.findElement(By.cssSelector("button.main-bygga-menu__button.hnf-trailing-icon"));
+        //Select sofa tab
+        WebElement products = driver.findElement(By.linkText("Produkty"));
         products.click();
 
-        //Sprawdzenie czy otworzyła się zakładka z produktami
-        String txt = driver.findElement(By.cssSelector("span.main-bygga-menu__dropdown__heading")).getText();
+        //Check that the sofa tab is open
+        String txt = driver.findElement(By.className("hnf-menu__heading")).getText();
         String expectedTxt = "Produkty";
         Assertions.assertEquals(expectedTxt, txt, "Products page failed. " +
                 "Expected: " + expectedTxt + " Actual: " + txt);
 
-        WebElement sofa = driver.findElement(By.cssSelector("button.main-bygga-menu__level1__item-button"));
+        //Select sofas and armchairs tab
+        WebElement sofa = driver.findElement(By.linkText("Sofy i fotele"));
         if (sofa.getText().equals("Sofy i fotele")) sofa.click();
+        TimeUnit.SECONDS.sleep(2);
 
-        //Sprawdzenie czy otworzyła się zakładka z podproduktami
-        boolean isDisplayed = driver.findElement(By.cssSelector("ul.main-bygga-menu__sub.main-bygga-menu__level2")).isDisplayed();
+        //Check that the sofas and armchairs tab is open
+        boolean isDisplayed =driver.findElement(By.cssSelector("body > aside > div.hnf-menu__container > nav.hnf-menu__nav2.hnf-menu--active > ul > li:nth-child(4) > nav > ul")).isDisplayed();
         Assert.assertTrue(isDisplayed);
 
-        WebElement leatherSofa = driver.findElement(By.xpath("/html/body/header/div[3]/div/nav[1]/div/ul[1]/li[1]/div/div[1]/ul/li[1]/ul/li[4]/a"));
+        //Select leather sofas tab
+        WebElement leatherSofa = driver.findElement(By.xpath("/html/body/aside/div[2]/nav[2]/ul/li[4]/nav/ul/li[4]/a"));
         leatherSofa.click();
         TimeUnit.SECONDS.sleep(2);
 
-        //Sprawdzenie czy otworzyła się podstrona z sofami skórzanymi
-        txt = driver.findElement(By.cssSelector("h1.range-page-title__title")).getText();
+        //Check that leather sofas tab is open
+        txt = driver.findElement(By.className("plp-page-title__title")).getText();
         expectedTxt = "Sofy skórzane/ze sztucznej skóry";
         Assertions.assertEquals(expectedTxt, txt, "Leather sofa page failed. " +
                 "Expected: " + expectedTxt + " Actual: " + txt);
 
-        WebElement selectSofa = driver.findElement(By.xpath("/html/body/main/div[4]/div[2]/div/div[2]/div[1]/div[1]/div[2]/div/div[2]/div/div/a/div/div/div"));
+        //Select two seat leather sofas
+        WebElement selectSofa = driver.findElement(By.linkText("Sofy ze sztucznej skóry, 2-osobowe"));
         selectSofa.click();
         TimeUnit.SECONDS.sleep(2);
 
-        //Sprawdzenie czy otworzyła się podstrona z konkretną sofą
-        txt = driver.findElement(By.cssSelector("span.product-pip__name")).getText();
+        //Check availability of GRÖNLID sofa
+        txt = driver.findElement(By.className("range-revamp-header-section__title--small")).getText();
         expectedTxt = "GRÖNLID";
         Assertions.assertEquals(expectedTxt, txt, "Leather sofa page failed. " +
                 "Expected: " + expectedTxt + " Actual: " + txt);
-        WebElement addToCard = driver.findElement(By.cssSelector("button.range-btn.range-btn--transactional.range-leading-icon.fill.js-purchase-add-to-cart"));
+
+        //Add to card sofa
+        WebElement addToCard = driver.findElement(By.cssSelector("body > div.plp-page-container > div > div > div.plp-main-container.plp-main-container > div > div > div.plp-product-list > div > div > div.plp-product-list__fragment > div > div > button"));
         addToCard.click();
 
     }
