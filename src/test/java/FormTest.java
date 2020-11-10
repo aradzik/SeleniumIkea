@@ -1,11 +1,8 @@
-
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.*;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -31,30 +28,31 @@ public class FormTest {
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(2);
         WebElement rodoButton = driver.findElement(By.id("onetrust-accept-btn-handler"));
         if (rodoButton.isDisplayed()) rodoButton.click();
+
+        //Click login
         WebElement clickLogin = driver.findElement(By.className("hnf-header__profile-link"));
         clickLogin.click();
         TimeUnit.SECONDS.sleep(2);
 
-        //Sprawdzenie czy znajdujemy się na stronie logowania
+        //Check if the login page is open
         String txt = driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/h1/span")).getText();
         String expectedTxt = "Zaloguj";
         Assertions.assertEquals(expectedTxt, txt, "Login page failed. " +
-                        "Expected: " + expectedTxt + " Actual: " + txt);
+                "Expected: " + expectedTxt + " Actual: " + txt);
 
-        
+        //Click register
         WebElement clickRegister = driver.findElement(By.id("signup"));
         clickRegister.click();
         TimeUnit.SECONDS.sleep(2);
 
-        //Sprawdzenie czy znajdujemy się na stronie rejestracji
+        //Check if the register page is open
         txt = driver.findElement(By.id("profile-page-headline")).getText();
         expectedTxt = "Utwórz profil IKEA Family";
         Assertions.assertEquals(expectedTxt, txt, "Register page failed. " +
                 "Expected: " + expectedTxt + " Actual: " + txt);
-
 
         WebElement name = driver.findElement(By.id("family-signup-form-firstName"));
         WebElement surname = driver.findElement(By.id("family-signup-form-lastName"));
@@ -69,7 +67,7 @@ public class FormTest {
         WebElement privacyPolicy = driver.findElement(By.id("family-signup-form-acceptPrivacyPolicy"));
         //WebElement submit = driver.findElement(By.id("family-signup-form-submit"));
 
-        //Sprawdzanie czy elementy wystepuja na stronie
+        //Check if items are available
         Assert.assertTrue(name.isDisplayed());
         Assert.assertTrue(surname.isDisplayed());
         Assert.assertTrue(birth.isDisplayed());
@@ -80,6 +78,7 @@ public class FormTest {
         Assert.assertTrue(email.isDisplayed());
         Assert.assertTrue(password.isDisplayed());
 
+        //Complete the text fields
         name.sendKeys("Anna");
         surname.sendKeys("Nowak");
         birth.sendKeys("01.01.1996");
@@ -92,12 +91,11 @@ public class FormTest {
         email.sendKeys("an@example.com");
         password.sendKeys("Password1");
 
+        //Click privacy policy
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("var evt = document.createEvent('MouseEvents');" + "evt.initMouseEvent('click',true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0,null);" + "arguments[0].dispatchEvent(evt);", privacyPolicy);
 
-        /**
-         * Click create account
-         * */
+        //Click create account
 //        Actions actions = new Actions(driver);
 //        actions.moveToElement(submit).click().build().perform();
     }
